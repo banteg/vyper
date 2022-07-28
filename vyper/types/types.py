@@ -169,6 +169,9 @@ def canonicalize_type(t, is_indexed=False):
     if isinstance(t, TupleLike):
         return f"({','.join(canonicalize_type(x) for x in t.tuple_members())})"
 
+    if isinstance(t, MappingType):
+        return f"({t.keytype},{canonicalize_type(t.valuetype)})"
+
     if not isinstance(t, BaseType):
         raise InvalidType(f"Cannot canonicalize non-base type: {t}")
 
