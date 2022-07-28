@@ -32,6 +32,7 @@ OUTPUT_FORMATS = {
     "bytecode_runtime": output.build_bytecode_runtime_output,
     "opcodes": output.build_opcodes_output,
     "opcodes_runtime": output.build_opcodes_runtime_output,
+    "layout": output.storage_layout,
 }
 
 

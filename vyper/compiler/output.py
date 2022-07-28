@@ -133,7 +133,10 @@ def build_source_map_output(compiler_data: CompilerData) -> OrderedDict:
         out[k] = line_number_map[k]
 
     out["pc_pos_map_compressed"] = _compress_source_map(
-        compiler_data.source_code, out["pc_pos_map"], out["pc_jump_map"], compiler_data.source_id,
+        compiler_data.source_code,
+        out["pc_pos_map"],
+        out["pc_jump_map"],
+        compiler_data.source_id,
     )
     out["pc_pos_map"] = dict((k, v) for k, v in out["pc_pos_map"].items() if v)
     return out
@@ -171,7 +174,7 @@ def build_bytecode_output(compiler_data: CompilerData) -> str:
 
 
 # EIP-170. Ref: https://eips.ethereum.org/EIPS/eip-170
-EIP170_CONTRACT_SIZE_LIMIT: int = 2 ** 14 + 2 ** 13
+EIP170_CONTRACT_SIZE_LIMIT: int = 2**14 + 2**13
 
 
 def build_bytecode_runtime_output(compiler_data: CompilerData) -> str:
@@ -210,3 +213,10 @@ def _build_opcodes(bytecode: bytes) -> str:
             opcode_output.append(f"0x{''.join(push_values).upper()}")
 
     return " ".join(opcode_output)
+
+
+def storage_layout(compiler_data: CompilerData):
+    return {
+        name: {"typ": str(item.typ), "pos": item.pos}
+        for name, item in compiler_data.global_ctx._globals.items()
+    }
