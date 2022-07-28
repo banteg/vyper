@@ -11,6 +11,7 @@ from vyper.compiler.utils import build_gas_estimates
 from vyper.context.types.function import FunctionVisibility, StateMutability
 from vyper.parser.lll_node import LLLnode
 from vyper.warnings import ContractSizeLimitWarning
+from vyper.types import canonicalize_type
 
 
 def build_ast_dict(compiler_data: CompilerData) -> dict:
@@ -216,7 +217,12 @@ def _build_opcodes(bytecode: bytes) -> str:
 
 
 def storage_layout(compiler_data: CompilerData):
-    return {
-        name: {"typ": str(item.typ), "pos": item.pos}
+    return [
+        {
+            "name": name,
+            "vyper_type": str(item.typ),
+            "abi_type": canonicalize_type(item.typ),
+            "pos": item.pos,
+        }
         for name, item in compiler_data.global_ctx._globals.items()
-    }
+    ]
