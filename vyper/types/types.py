@@ -99,7 +99,7 @@ class MappingType(NodeType):
         return other.keytype == self.keytype and other.valuetype == self.valuetype
 
     def __repr__(self):
-        return "HashMap[" + repr(self.valuetype) + ", " + repr(self.keytype) + "]"
+        return "HashMap[" + repr(self.keytype) + ", " + repr(self.valuetype) + "]"
 
 
 # Type which has heterogeneous members, i.e. Tuples and Structs
